@@ -4,7 +4,7 @@ extends CharacterBody2D
 const SPEED = 200.0
 @onready var player: CharacterBody2D = $"."
 var firstPos
-const hoseLimit = Vector2(50.0,50.0)
+const hoseLimit = Vector2(100.0,100.0)
 
 func _draw() -> void:
 	#this draws the line for the hose
