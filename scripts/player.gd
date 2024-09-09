@@ -50,27 +50,22 @@ func _playerMovement() -> void:
 	var directiony := Input.get_axis("moveUp", "moveDown")
 	
 	#player movement, checks if it can move in one direction
-	if directionx or directiony:
-		if (directionx < 0 and canMoveLeft()):
-			velocity.x = directionx * SPEED
-		if (directionx > 0 and canMoveRight()):
-			velocity.x = directionx * SPEED
-		if (directiony < 0 and canMoveUp()):
-			velocity.y = directiony * SPEED
-		if (directiony > 0 and canMoveDown()):
-			velocity.y = directiony * SPEED
+	if (directionx < 0 and canMoveLeft()):
+		velocity.x = directionx * SPEED
+	elif (directionx > 0 and canMoveRight()):
+		velocity.x = directionx * SPEED
+	elif (directiony < 0 and canMoveUp()):
+		velocity.y = directiony * SPEED
+	elif (directiony > 0 and canMoveDown()):
+		velocity.y = directiony * SPEED
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.y = move_toward(velocity.y, 0, SPEED)
-
+			
 	move_and_slide()
 
 func _physics_process(delta: float) -> void:
-	canMoveDown()
-	canMoveUp()
-	canMoveRight()
-	canMoveLeft()
 	_playerMovement()
 	queue_redraw()
-	print(firstPos)
-	print(player.global_position)
+	#print(firstPos)
+	#print(player.global_position)
