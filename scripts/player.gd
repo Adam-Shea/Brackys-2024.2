@@ -3,6 +3,8 @@ extends CharacterBody2D
 #current speed of player
 const SPEED = 200.0
 @onready var player: CharacterBody2D = $"."
+var firstPos
+const hoseLimit = Vector2(100.0,100.0)
 var shootDir = Vector2(0,0)
 var lastDir = Vector2(0,0)
 var hoseCenter = Vector2(0.0,0.0)
