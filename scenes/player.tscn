@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://c72epayfxecr0"]
+[gd_scene load_steps=7 format=3 uid="uid://c72epayfxecr0"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_kj3n1"]
 [ext_resource type="Texture2D" uid="uid://deiw53r7r2th8" path="res://assets/placeholder/Roguelike Characters pack/Spritesheet/roguelikeChar_transparent.png" id="1_qd51b"]
@@ -21,6 +21,13 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uervv"]
 size = Vector2(15, 13)
 
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hdfmg"]
+lifetime_randomness = 0.07
+particle_flag_disable_z = true
+spread = 9.474
+initial_velocity_min = 168.46
+initial_velocity_max = 230.15
+
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_kj3n1")
 
@@ -33,3 +40,8 @@ autoplay = "placeholder"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, -6.5)
 shape = SubResource("RectangleShape2D_uervv")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+amount = 20
+process_material = SubResource("ParticleProcessMaterial_hdfmg")
+lifetime = 0.3
