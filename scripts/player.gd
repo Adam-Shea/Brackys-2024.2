@@ -6,18 +6,22 @@ const SPEED = 200.0
 var shootDir = Vector2(0,0)
 var lastDir = Vector2(0,0)
 var hoseCenter = Vector2(0.0,0.0)
+var connectedToSource = true
+const hoseForgivenessRange = 10
 const hoseRadius = 100
 
 func _draw() -> void:
 	#this draws the line for the hose
 	var currpos = player.global_position
-	draw_line(-player.global_position, hoseCenter, 
-	# Generate colour of line. Closer to center, the greener the line should be
-	Color(
-	sqrt(pow(currpos.x - hoseCenter.x,2) + pow(currpos.y - hoseCenter.y, 2))/hoseRadius,
-	1 - (sqrt(pow(currpos.x - hoseCenter.x,2) + pow(currpos.y - hoseCenter.y, 2))/hoseRadius),
-	0,
-	1), float(4.0))
+	
+	if(connectedToSource):
+		draw_line(-player.global_position+hoseCenter, Vector2(0,0), 
+		# Generate colour of line. Closer to center, the greener the line should be
+		Color(
+		sqrt(pow(currpos.x - hoseCenter.x,2) + pow(currpos.y - hoseCenter.y, 2))/hoseRadius,
+		1 - (sqrt(pow(currpos.x - hoseCenter.x,2) + pow(currpos.y - hoseCenter.y, 2))/hoseRadius),
+		0,
+		1), float(4.0))
 
 	if(shootDir.x == 1):
 		$GPUParticles2D.emitting = true
@@ -41,11 +45,14 @@ func _ready() -> void:
 	
 #calculate whether the player can still move after a distance
 func isWithinHoseRadius(x,y):
-	var currpos = player.global_position
-	if(sqrt(pow(currpos.x - hoseCenter.x + x,2) + pow(currpos.y - hoseCenter.y + y, 2))<=hoseRadius):
-		return true
+	if connectedToSource:
+		var currpos = player.global_position
+		if(sqrt(pow(currpos.x - hoseCenter.x + x,2) + pow(currpos.y - hoseCenter.y + y, 2))<=hoseRadius):
+			return true
+		else:
+			return false
 	else:
-		return false
+		return true
 
 #dictates player movement
 func _playerMovement() -> void:
@@ -77,14 +84,29 @@ func _playerMovement() -> void:
 	move_and_slide()
 
 func _shootWater() -> void:
-	if(Input.is_action_just_pressed("shootWater")):
+	if(Input.is_action_just_pressed("shootWater") && connectedToSource):
 		shootDir = lastDir
 	if(Input.is_action_just_released("shootWater")):
 		shootDir = Vector2(0,0)
 
+func _diconnectSource() -> void:
+	if(
+		Input.is_action_just_released("interact") && 
+		player.global_position.x < hoseCenter.x + hoseForgivenessRange &&
+		player.global_position.x > hoseCenter.x - hoseForgivenessRange &&
+		player.global_position.y > hoseCenter.y - hoseForgivenessRange &&
+		player.global_position.y < hoseCenter.y + hoseForgivenessRange):
+			connectedToSource = false
+	# Just so we can debug with multiple sources
+	elif(Input.is_action_just_released("interact") && !connectedToSource):
+		hoseCenter = player.global_position
+		connectedToSource = true
+			
+
 func _physics_process(delta: float) -> void:
 	_playerMovement()
 	_shootWater()
+	_diconnectSource()
 	queue_redraw()
 	#print(firstPos)
 	#print(player.global_position)
