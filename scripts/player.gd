@@ -4,11 +4,11 @@ extends CharacterBody2D
 const SPEED = 200.0
 @onready var player: CharacterBody2D = $"."
 var firstPos
-const hoseLimit = Vector2(100.0,100.0)
+const hoseLimit = Vector2(50.0,50.0)
 
 func _draw() -> void:
 	#this draws the line for the hose
-	draw_line(player.global_position, firstPos, Color.AQUA, float(4.0))
+	draw_line(-player.global_position, firstPos, Color.AQUA, float(4.0))
 	
 func _ready() -> void:
 	#gets first player instance
@@ -68,4 +68,4 @@ func _physics_process(delta: float) -> void:
 	_playerMovement()
 	queue_redraw()
 	#print(firstPos)
-	#print(player.global_position)
+	print(player.global_position)
