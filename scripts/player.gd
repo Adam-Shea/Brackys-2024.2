@@ -11,6 +11,7 @@ var hoseCenter = Vector2(0.0,0.0)
 var connectedToSource = true
 const hoseForgivenessRange = 10
 const hoseRadius = 100
+@export var health = 100
 
 func _draw() -> void:
 	#this draws the line for the hose
@@ -104,6 +105,8 @@ func _diconnectSource() -> void:
 		hoseCenter = player.global_position
 		connectedToSource = true
 			
+func _on_body_entered():
+	pass
 
 func _physics_process(delta: float) -> void:
 	_playerMovement()

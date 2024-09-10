@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://71bo63rr8dlq"]
+[gd_scene load_steps=5 format=3 uid="uid://71bo63rr8dlq"]
 
 [ext_resource type="Texture2D" uid="uid://b08e1bjtmbxk4" path="res://img/firePlaceholder.png" id="1_5oanl"]
 [ext_resource type="Script" path="res://scripts/fire.gd" id="1_14dg2"]
@@ -14,8 +14,15 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Fire" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gr71s"]
+size = Vector2(16, 16)
+
+[node name="Fire" type="Area2D"]
+collision_mask = 2
 script = ExtResource("1_14dg2")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_fqqjh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_gr71s")
