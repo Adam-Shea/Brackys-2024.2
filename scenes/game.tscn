@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=4 uid="uid://c2rjgq21h8ty2"]
+[gd_scene load_steps=11 format=4 uid="uid://c2rjgq21h8ty2"]
 
 [ext_resource type="PackedScene" uid="uid://c72epayfxecr0" path="res://scenes/player.tscn" id="1_415hq"]
+[ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_p4uqs"]
 [ext_resource type="Texture2D" uid="uid://cw5wob35sshq8" path="res://assets/placeholder/TopDownFantasy-Forest/Tiles/Tileset.png" id="2_vq0cp"]
 [ext_resource type="Texture2D" uid="uid://deiw53r7r2th8" path="res://assets/placeholder/Roguelike Characters pack/Spritesheet/roguelikeChar_transparent.png" id="2_wcndx"]
 [ext_resource type="Texture2D" uid="uid://clwj4w80ulqyb" path="res://tilesheet.png" id="3_8a71p"]
@@ -703,6 +704,10 @@ sources/2 = SubResource("TileSetAtlasSource_rm8k0")
 sources/0 = SubResource("TileSetAtlasSource_n1vxd")
 
 [node name="Game" type="Node2D"]
+
+[node name="GameManager" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("1_p4uqs")
 
 [node name="Player" parent="." instance=ExtResource("1_415hq")]
 
