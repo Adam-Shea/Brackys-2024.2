@@ -11,7 +11,7 @@ var hoseCenter = Vector2(0.0,0.0)
 var connectedToSource = true
 const hoseForgivenessRange = 10
 const hoseRadius = 100
-@export var health = 100
+@export var health = 3
 
 func _draw() -> void:
 	#this draws the line for the hose
