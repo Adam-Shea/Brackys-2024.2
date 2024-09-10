@@ -5,7 +5,6 @@ const replicationSpeed = 5;
 const maxNodesInTree = 100;
 var rng = RandomNumberGenerator.new()
 var health = 100;
-@onready var game_manager: Node2D = %GameManager
 var replicationCount = 0;
 
 # Called when the node enters the scene tree for the first time.
@@ -22,8 +21,11 @@ func spreadLogic() -> void:
 	var newFire = $".".duplicate()
 	newFire.position = global_position+Vector2(rng.randf_range(-20.0, 20.0),rng.randf_range(-20.0, 20.0))
 	add_sibling(newFire)
+
 	
 #damaging the player when they enter the fire
 func _on_body_entered(body: Node2D) -> void:
-	game_manager.fireDamage()
-	print("i am in pain")
+	if (body.name.match("Player")):
+		body.handleDamageTaken(1,
+		Vector2((global_position+get_node("CollisionShape2D").shape.size).x-(body.global_position+body.get_node("CollisionShape2D").shape.size).x,
+		(global_position+get_node("CollisionShape2D").shape.size).y-(body.global_position+body.get_node("CollisionShape2D").shape.size).y))
