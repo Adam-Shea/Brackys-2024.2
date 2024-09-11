@@ -6,6 +6,7 @@ const maxNodesInTree = 100;
 var rng = RandomNumberGenerator.new()
 var health = 100;
 var replicationCount = 0;
+var Fire = load("res://scenes/fire.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -18,9 +19,10 @@ func spreadTimer() -> void:
 
 func spreadLogic() -> void:
 	replicationCount += 1
-	var newFire = $".".duplicate()
+	var newFire = Fire.instantiate()
+	newFire.set_name("Fire")
 	newFire.position = global_position+Vector2(rng.randf_range(-20.0, 20.0),rng.randf_range(-20.0, 20.0))
-	add_sibling(newFire)
+	add_sibling(newFire, true)
 
 	
 #damaging the player when they enter the fire
@@ -29,3 +31,7 @@ func _on_body_entered(body: Node2D) -> void:
 		body.handleDamageTaken(1,
 		Vector2((global_position+get_node("CollisionShape2D").shape.size).x-(body.global_position+body.get_node("CollisionShape2D").shape.size).x,
 		(global_position+get_node("CollisionShape2D").shape.size).y-(body.global_position+body.get_node("CollisionShape2D").shape.size).y))
+
+func _physics_process(delta: float) -> void:
+	if (health <=0):
+		queue_free()

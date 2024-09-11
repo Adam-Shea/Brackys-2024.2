@@ -19,7 +19,7 @@ func _draw() -> void:
 	var currpos = player.global_position
 	
 	if(connectedToSource):
-		draw_line(-player.global_position+hoseCenter, Vector2(0,0), 
+		draw_line(-player.global_position + hoseCenter, Vector2(0,0), 
 		# Generate colour of line. Closer to center, the greener the line should be
 		Color(
 		sqrt(pow(currpos.x - hoseCenter.x,2) + pow(currpos.y - hoseCenter.y, 2))/hoseRadius,
@@ -30,15 +30,19 @@ func _draw() -> void:
 	if(shootDir.x == 1):
 		$GPUParticles2D.emitting = true
 		$GPUParticles2D.rotation_degrees = 0
+		$RayCast2D.rotation_degrees = 0
 	elif(shootDir.x == -1):
 		$GPUParticles2D.emitting = true
 		$GPUParticles2D.rotation_degrees = 180
+		$RayCast2D.rotation_degrees = 180
 	elif(shootDir.y == 1):
 		$GPUParticles2D.emitting = true
 		$GPUParticles2D.rotation_degrees = 90
+		$RayCast2D.rotation_degrees = 90
 	elif(shootDir.y == -1):
 		$GPUParticles2D.emitting = true
 		$GPUParticles2D.rotation_degrees = 270
+		$RayCast2D.rotation_degrees = 270
 	else:
 		$GPUParticles2D.emitting = false
 
@@ -87,11 +91,22 @@ func _playerMovement() -> void:
 			
 	move_and_slide()
 
+func disableWater() -> void:
+	shootDir = Vector2(0,0)
+	$RayCast2D.enabled = false
+
 func _shootWater() -> void:
 	if(Input.is_action_just_pressed("shootWater") && connectedToSource):
 		shootDir = lastDir
+		$RayCast2D.enabled = true
 	if(Input.is_action_just_released("shootWater")):
-		shootDir = Vector2(0,0)
+		disableWater()
+	
+	if ($RayCast2D.enabled && $RayCast2D.is_colliding()):
+		if ($RayCast2D.get_collider() && $RayCast2D.get_collider().name.left(4) == "Fire"):
+			$RayCast2D.get_collider().health -= 1
+			$RayCast2D.get_collider().scale.x *= 0.998
+			$RayCast2D.get_collider().scale.y *= 0.998
 
 func _diconnectSource() -> void:
 	if(
@@ -101,6 +116,7 @@ func _diconnectSource() -> void:
 		player.global_position.y > hoseCenter.y - hoseForgivenessRange &&
 		player.global_position.y < hoseCenter.y + hoseForgivenessRange):
 			connectedToSource = false
+			disableWater()
 	# Just so we can debug with multiple sources
 	elif(Input.is_action_just_released("interact") && !connectedToSource):
 		hoseCenter = player.global_position
@@ -120,6 +136,7 @@ func handleDamageTaken(damageAmount,vectorTo) -> void:
 		# if knockback is too far disconnect hose
 		if(!isWithinHoseRadius(player.global_position.x,player.global_position.y)):
 			connectedToSource = false
+			disableWater()
 			
 		await get_tree().create_timer(2).timeout
 		hasIframes = false
