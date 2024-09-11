@@ -1,17 +1,28 @@
-[gd_scene load_steps=5 format=3 uid="uid://71bo63rr8dlq"]
+[gd_scene load_steps=7 format=3 uid="uid://71bo63rr8dlq"]
 
-[ext_resource type="Texture2D" uid="uid://b08e1bjtmbxk4" path="res://img/firePlaceholder.png" id="1_5oanl"]
 [ext_resource type="Script" path="res://scripts/fire.gd" id="1_14dg2"]
+[ext_resource type="Texture2D" uid="uid://dd0nmtob80f66" path="res://assets/art/calmbeforethestormfire.png" id="2_qtiv5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_67pup"]
+atlas = ExtResource("2_qtiv5")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_22gnu"]
+atlas = ExtResource("2_qtiv5")
+region = Rect2(16, 0, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_fqqjh"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_5oanl")
+"texture": SubResource("AtlasTexture_67pup")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_22gnu")
 }],
 "loop": true,
 "name": &"default",
-"speed": 5.0
+"speed": 10.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gr71s"]
@@ -23,6 +34,8 @@ script = ExtResource("1_14dg2")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_fqqjh")
+autoplay = "default"
+frame_progress = 0.151692
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_gr71s")
