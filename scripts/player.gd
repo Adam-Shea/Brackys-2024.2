@@ -9,7 +9,7 @@ var shootDir = Vector2(0,0)
 var lastDir = Vector2(0,0)
 var hoseCenter = Vector2(0.0,0.0)
 var connectedToSource = true
-var hasIframes = false 
+var hasIframes := false 
 const hoseForgivenessRange = 10
 const hoseRadius = 100
 @export var health = 3
@@ -125,21 +125,22 @@ func _diconnectSource() -> void:
 func _on_body_entered():
 	pass
 	
+#this handles pushback now
 func handleDamageTaken(damageAmount,vectorTo) -> void:
 	if (!hasIframes):
 		player.global_position.x -= vectorTo.x*1.5
 		player.global_position.y -= vectorTo.y*1.5
-		hasIframes = true
-		health -= damageAmount
-		if(health<=0):
-			print("I'm dead")
+		#hasIframes = true
+		#health -= damageAmount
+		#if(health<=0):
+			#print("I'm dead")
 		# if knockback is too far disconnect hose
 		if(!isWithinHoseRadius(player.global_position.x,player.global_position.y)):
 			connectedToSource = false
 			disableWater()
 			
 		await get_tree().create_timer(2).timeout
-		hasIframes = false
+		#hasIframes = false
 
 func _physics_process(delta: float) -> void:
 	_playerMovement()
