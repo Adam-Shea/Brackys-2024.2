@@ -1,9 +1,11 @@
-[gd_scene load_steps=10 format=4 uid="uid://c2rjgq21h8ty2"]
+[gd_scene load_steps=12 format=4 uid="uid://c2rjgq21h8ty2"]
 
 [ext_resource type="PackedScene" uid="uid://c72epayfxecr0" path="res://scenes/player.tscn" id="1_415hq"]
+[ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_yp0ok"]
 [ext_resource type="Texture2D" uid="uid://cw5wob35sshq8" path="res://assets/placeholder/TopDownFantasy-Forest/Tiles/Tileset.png" id="2_vq0cp"]
 [ext_resource type="Texture2D" uid="uid://deiw53r7r2th8" path="res://assets/placeholder/Roguelike Characters pack/Spritesheet/roguelikeChar_transparent.png" id="2_wcndx"]
 [ext_resource type="Texture2D" uid="uid://clwj4w80ulqyb" path="res://tilesheet.png" id="3_8a71p"]
+[ext_resource type="PackedScene" uid="uid://b3ftcrrhb6dlk" path="res://scenes/heart.tscn" id="3_v4og6"]
 [ext_resource type="PackedScene" uid="uid://71bo63rr8dlq" path="res://scenes/fire.tscn" id="5_wul2p"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_n1vxd"]
@@ -704,10 +706,23 @@ sources/0 = SubResource("TileSetAtlasSource_n1vxd")
 
 [node name="Game" type="Node2D"]
 
+[node name="GameManager" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("1_yp0ok")
+
 [node name="Player" parent="." instance=ExtResource("1_415hq")]
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(3, 3)
+
+[node name="heart" parent="Player/Camera2D" instance=ExtResource("3_v4og6")]
+position = Vector2(-180, -98)
+
+[node name="heart2" parent="Player/Camera2D" instance=ExtResource("3_v4og6")]
+position = Vector2(-167, -98)
+
+[node name="heart3" parent="Player/Camera2D" instance=ExtResource("3_v4og6")]
+position = Vector2(-154, -98)
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 z_index = -5

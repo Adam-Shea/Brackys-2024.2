@@ -7,6 +7,8 @@ var rng = RandomNumberGenerator.new()
 var health = 100;
 var replicationCount = 0;
 var Fire = load("res://scenes/fire.tscn")
+@onready var game_manager: Node = %GameManager
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -31,6 +33,8 @@ func _on_body_entered(body: Node2D) -> void:
 		body.handleDamageTaken(1,
 		Vector2((global_position+get_node("CollisionShape2D").shape.size).x-(body.global_position+body.get_node("CollisionShape2D").shape.size).x,
 		(global_position+get_node("CollisionShape2D").shape.size).y-(body.global_position+body.get_node("CollisionShape2D").shape.size).y))
+		game_manager.fireDamage()
+		
 
 func _physics_process(delta: float) -> void:
 	if (health <=0):
