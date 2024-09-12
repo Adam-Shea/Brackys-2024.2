@@ -26,7 +26,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gr71s"]
-size = Vector2(16, 16)
+size = Vector2(18, 19)
 
 [node name="Fire" type="Area2D"]
 collision_layer = 2
@@ -39,6 +39,7 @@ autoplay = "default"
 frame_progress = 0.151692
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 2.5)
 shape = SubResource("RectangleShape2D_gr71s")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
