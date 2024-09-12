@@ -1,25 +1,59 @@
-[gd_scene load_steps=7 format=3 uid="uid://c72epayfxecr0"]
+[gd_scene load_steps=12 format=3 uid="uid://c72epayfxecr0"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_kj3n1"]
-[ext_resource type="Texture2D" uid="uid://deiw53r7r2th8" path="res://assets/placeholder/Roguelike Characters pack/Spritesheet/roguelikeChar_transparent.png" id="1_qd51b"]
+[ext_resource type="Texture2D" uid="uid://d4jrmbgr76iif" path="res://assets/art/firefighteridle.png" id="2_ph3b0"]
+[ext_resource type="Texture2D" uid="uid://e1xpuonr6brl" path="res://assets/art/firefighterwalking.png" id="3_oqyxa"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_1tw1r"]
-atlas = ExtResource("1_qd51b")
-region = Rect2(16, 101, 16, 16)
+[sub_resource type="AtlasTexture" id="AtlasTexture_lexbx"]
+atlas = ExtResource("2_ph3b0")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i34h6"]
+atlas = ExtResource("2_ph3b0")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lww76"]
+atlas = ExtResource("3_oqyxa")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yt5tn"]
+atlas = ExtResource("3_oqyxa")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4o6yp"]
+atlas = ExtResource("3_oqyxa")
+region = Rect2(32, 0, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_lmdbm"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_1tw1r")
+"texture": SubResource("AtlasTexture_lexbx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i34h6")
 }],
 "loop": true,
-"name": &"placeholder",
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lww76")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yt5tn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4o6yp")
+}],
+"loop": true,
+"name": &"walking",
 "speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uervv"]
-size = Vector2(15, 13)
+size = Vector2(7, 14)
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hdfmg"]
 lifetime_randomness = 0.07
@@ -36,11 +70,11 @@ script = ExtResource("1_kj3n1")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-1, -8)
 sprite_frames = SubResource("SpriteFrames_lmdbm")
-animation = &"placeholder"
-autoplay = "placeholder"
+animation = &"idle"
+autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-0.5, -6.5)
+position = Vector2(-1.5, -7)
 shape = SubResource("RectangleShape2D_uervv")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
