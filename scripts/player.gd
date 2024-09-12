@@ -13,6 +13,8 @@ var hasIframes := false
 const hoseForgivenessRange = 10
 const hoseRadius = 100
 @export var health = 3
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+
 
 func _draw() -> void:
 	#this draws the line for the hose
@@ -67,6 +69,12 @@ func _playerMovement() -> void:
 	# Get the input direction and handle the movement/deceleration..
 	var directionx := Input.get_axis("moveLeft", "moveRight")
 	var directiony := Input.get_axis("moveUp", "moveDown")
+	
+	#set up animation for either walking or idle
+	if directionx or directiony:
+		animated_sprite.play("walking")
+	else:
+		animated_sprite.play("idle")
 	
 	#player movement, checks if it can move in one direction
 	if (directionx < 0 and isWithinHoseRadius(-5,0)):

@@ -25,7 +25,6 @@ func spreadLogic() -> void:
 	newFire.set_name("Fire")
 	newFire.position = global_position+Vector2(rng.randf_range(-20.0, 20.0),rng.randf_range(-20.0, 20.0))
 	add_sibling(newFire, true)
-
 	
 #damaging the player when they enter the fire
 func _on_body_entered(body: Node2D) -> void:
