@@ -7,7 +7,7 @@ var rng = RandomNumberGenerator.new()
 var health = 100;
 var replicationCount = 0;
 var Fire = load("res://scenes/fire.tscn")
-@onready var game_manager: Node = %GameManager
+@onready var game_manager: Node = $"../%GameManager"
 
 
 # Called when the node enters the scene tree for the first time.
@@ -23,8 +23,9 @@ func spreadLogic() -> void:
 	replicationCount += 1
 	var newFire = Fire.instantiate()
 	newFire.set_name("Fire")
+	newFire.game_manager = game_manager
 	newFire.position = global_position+Vector2(rng.randf_range(-20.0, 20.0),rng.randf_range(-20.0, 20.0))
-	add_sibling(newFire, true)
+	get_parent().add_child(newFire, true)
 	
 #damaging the player when they enter the fire
 func _on_body_entered(body: Node2D) -> void:
