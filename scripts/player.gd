@@ -8,8 +8,9 @@ const hoseLimit = Vector2(100.0,100.0)
 var shootDir = Vector2(0,0)
 var lastDir = Vector2(0,0)
 var hoseCenter = Vector2(0.0,0.0)
-var connectedToSource = true
+var connectedToSource = false
 var hasIframes := false 
+var canPlaceSource = false
 const hoseForgivenessRange = 10
 const hoseRadius = 100
 @export var health = 3
@@ -116,18 +117,15 @@ func _shootWater() -> void:
 			$RayCast2D.get_collider().scale.x *= 0.998
 			$RayCast2D.get_collider().scale.y *= 0.998
 
-func _diconnectSource() -> void:
+
+func _disconnectSource() -> void:
 	if(
-		Input.is_action_just_released("interact") && 
-		player.global_position.x < hoseCenter.x + hoseForgivenessRange &&
-		player.global_position.x > hoseCenter.x - hoseForgivenessRange &&
-		player.global_position.y > hoseCenter.y - hoseForgivenessRange &&
-		player.global_position.y < hoseCenter.y + hoseForgivenessRange):
+		Input.is_action_just_released("interact") && connectedToSource &&
+		canPlaceSource):
 			connectedToSource = false
 			disableWater()
 	# Just so we can debug with multiple sources
-	elif(Input.is_action_just_released("interact") && !connectedToSource):
-		hoseCenter = player.global_position
+	elif(Input.is_action_just_released("interact") && !connectedToSource && canPlaceSource):
 		connectedToSource = true
 			
 func _on_body_entered():
@@ -153,7 +151,7 @@ func handleDamageTaken(damageAmount,vectorTo) -> void:
 func _physics_process(delta: float) -> void:
 	_playerMovement()
 	_shootWater()
-	_diconnectSource()
+	_disconnectSource()
 	queue_redraw()
 	#print(firstPos)
 	#print(player.global_position)

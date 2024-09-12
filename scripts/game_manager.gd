@@ -6,9 +6,9 @@ extends Node
 var hasIFrames: bool = false
 
 func fireDamage():
-	print("aaa damage")
 	if (!hasIFrames):
-		print(player.health)
+		player.connectedToSource = false
+		player.disableWater()
 		if (player.health > 1):
 			player.health -= 1
 			if player.health == 2:
@@ -19,7 +19,12 @@ func fireDamage():
 			heart.lostHealth()
 			print("you died")
 		hasIFrames = true
+	
+		for i in 6:
+			player.modulate.a = 0.5
+			await get_tree().create_timer(0.05).timeout
+			player.modulate.a = 1.0
+			await get_tree().create_timer(0.05).timeout
 		
-		await get_tree().create_timer(2).timeout
 		hasIFrames = false
 	

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://c2rjgq21h8ty2"]
+[gd_scene load_steps=13 format=4 uid="uid://c2rjgq21h8ty2"]
 
 [ext_resource type="PackedScene" uid="uid://c72epayfxecr0" path="res://scenes/player.tscn" id="1_415hq"]
 [ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_yp0ok"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://clwj4w80ulqyb" path="res://tilesheet.png" id="3_8a71p"]
 [ext_resource type="PackedScene" uid="uid://b3ftcrrhb6dlk" path="res://scenes/heart.tscn" id="3_v4og6"]
 [ext_resource type="PackedScene" uid="uid://71bo63rr8dlq" path="res://scenes/fire.tscn" id="5_wul2p"]
+[ext_resource type="PackedScene" uid="uid://cjv0csjdyhnm2" path="res://scenes/waterSource.tscn" id="8_7mnip"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_n1vxd"]
 texture = ExtResource("2_wcndx")
@@ -711,6 +712,7 @@ unique_name_in_owner = true
 script = ExtResource("1_yp0ok")
 
 [node name="Player" parent="." instance=ExtResource("1_415hq")]
+z_index = 3
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(3, 3)
@@ -731,3 +733,10 @@ tile_set = SubResource("TileSet_lhqmc")
 
 [node name="Fire" parent="." instance=ExtResource("5_wul2p")]
 position = Vector2(44, 61)
+
+[node name="WaterSource" parent="." instance=ExtResource("8_7mnip")]
+position = Vector2(-56, 24)
+collision_layer = 3
+
+[node name="WaterSource2" parent="." instance=ExtResource("8_7mnip")]
+position = Vector2(82, -29)

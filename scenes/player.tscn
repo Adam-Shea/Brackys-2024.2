@@ -63,8 +63,8 @@ initial_velocity_min = 168.46
 initial_velocity_max = 230.15
 
 [node name="Player" type="CharacterBody2D"]
-collision_layer = 2
-collision_mask = 2
+collision_layer = 3
+collision_mask = 3
 script = ExtResource("1_kj3n1")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -78,11 +78,13 @@ position = Vector2(-1.5, -7)
 shape = SubResource("RectangleShape2D_uervv")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(0, -6)
 amount = 20
 process_material = SubResource("ParticleProcessMaterial_hdfmg")
 lifetime = 0.3
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2(0, -6)
 enabled = false
 target_position = Vector2(65, 0)
 collision_mask = 2

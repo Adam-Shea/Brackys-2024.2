@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://cjv0csjdyhnm2"]
+
+[ext_resource type="Texture2D" uid="uid://b08e1bjtmbxk4" path="res://img/firePlaceholder.png" id="1_qg74k"]
+[ext_resource type="Script" path="res://scenes/water_source.gd" id="1_rnf8v"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xyg2e"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_523pt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_qg74k")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="WaterSource" type="Area2D"]
+collision_mask = 3
+script = ExtResource("1_rnf8v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_xyg2e")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_523pt")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
