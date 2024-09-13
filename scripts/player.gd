@@ -15,6 +15,7 @@ const hoseForgivenessRange = 10
 const hoseRadius = 100
 @export var health = 3
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+var canMove := true
 
 
 func _draw() -> void:
@@ -68,39 +69,40 @@ func isWithinHoseRadius(x,y):
 #dictates player movement
 func _playerMovement() -> void:
 	# Get the input direction and handle the movement/deceleration..
-	var directionx := Input.get_axis("moveLeft", "moveRight")
-	var directiony := Input.get_axis("moveUp", "moveDown")
-	
-	#set up animation for either walking or idle
-	if directionx or directiony:
-		animated_sprite.play("walking")
-	else:
-		animated_sprite.play("idle")
-	
-	#player movement, checks if it can move in one direction
-	if (directionx < 0 and isWithinHoseRadius(-5,0)):
-		if(!Input.is_action_pressed("shootWater")):
-			lastDir = Vector2(-1,0)
-		animated_sprite.flip_h = true
-		velocity.x = directionx * SPEED
-	elif (directionx > 0 and isWithinHoseRadius(5,0)):
-		if(!Input.is_action_pressed("shootWater")):
-			lastDir = Vector2(1,0)
-		animated_sprite.flip_h = false
-		velocity.x = directionx * SPEED
-	elif (directiony < 0 and isWithinHoseRadius(0,-5)):
-		if(!Input.is_action_pressed("shootWater")):
-			lastDir = Vector2(0,-1)
-		velocity.y = directiony * SPEED
-	elif (directiony > 0 and isWithinHoseRadius(0,5)):
-		if(!Input.is_action_pressed("shootWater")):
-			lastDir = Vector2(0,1)
-		velocity.y = directiony * SPEED
-	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.y = move_toward(velocity.y, 0, SPEED)
-			
-	move_and_slide()
+	if canMove:
+		var directionx := Input.get_axis("moveLeft", "moveRight")
+		var directiony := Input.get_axis("moveUp", "moveDown")
+		
+		#set up animation for either walking or idle
+		if directionx or directiony:
+			animated_sprite.play("walking")
+		else:
+			animated_sprite.play("idle")
+		
+		#player movement, checks if it can move in one direction
+		if (directionx < 0 and isWithinHoseRadius(-5,0)):
+			if(!Input.is_action_pressed("shootWater")):
+				lastDir = Vector2(-1,0)
+			animated_sprite.flip_h = true
+			velocity.x = directionx * SPEED
+		elif (directionx > 0 and isWithinHoseRadius(5,0)):
+			if(!Input.is_action_pressed("shootWater")):
+				lastDir = Vector2(1,0)
+			animated_sprite.flip_h = false
+			velocity.x = directionx * SPEED
+		elif (directiony < 0 and isWithinHoseRadius(0,-5)):
+			if(!Input.is_action_pressed("shootWater")):
+				lastDir = Vector2(0,-1)
+			velocity.y = directiony * SPEED
+		elif (directiony > 0 and isWithinHoseRadius(0,5)):
+			if(!Input.is_action_pressed("shootWater")):
+				lastDir = Vector2(0,1)
+			velocity.y = directiony * SPEED
+		else:
+			velocity.x = move_toward(velocity.x, 0, SPEED)
+			velocity.y = move_toward(velocity.y, 0, SPEED)
+				
+		move_and_slide()
 
 func disableWater() -> void:
 	shootDir = Vector2(0,0)
@@ -149,6 +151,9 @@ func handleDamageTaken(damageAmount,vectorTo) -> void:
 			
 		await get_tree().create_timer(2).timeout
 		#hasIframes = false
+
+func stopMoving():
+	canMove = false
 
 func _physics_process(delta: float) -> void:
 	_playerMovement()
