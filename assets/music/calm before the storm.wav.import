@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cbhvn7yb56kbr"
+path="res://.godot/imported/calm before the storm.wav-bfb1cb657c5f8119bb59fe71323e76b4.sample"
+
+[deps]
+
+source_file="res://assets/music/calm before the storm.wav"
+dest_files=["res://.godot/imported/calm before the storm.wav-bfb1cb657c5f8119bb59fe71323e76b4.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=2
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

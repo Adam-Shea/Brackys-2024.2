@@ -81,10 +81,12 @@ func _playerMovement() -> void:
 	if (directionx < 0 and isWithinHoseRadius(-5,0)):
 		if(!Input.is_action_pressed("shootWater")):
 			lastDir = Vector2(-1,0)
+		animated_sprite.flip_h = true
 		velocity.x = directionx * SPEED
 	elif (directionx > 0 and isWithinHoseRadius(5,0)):
 		if(!Input.is_action_pressed("shootWater")):
 			lastDir = Vector2(1,0)
+		animated_sprite.flip_h = false
 		velocity.x = directionx * SPEED
 	elif (directiony < 0 and isWithinHoseRadius(0,-5)):
 		if(!Input.is_action_pressed("shootWater")):

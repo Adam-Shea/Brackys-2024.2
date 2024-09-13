@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://c2rjgq21h8ty2"]
+[gd_scene load_steps=14 format=4 uid="uid://c2rjgq21h8ty2"]
 
 [ext_resource type="PackedScene" uid="uid://c72epayfxecr0" path="res://scenes/player.tscn" id="1_415hq"]
 [ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_yp0ok"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://b3ftcrrhb6dlk" path="res://scenes/heart.tscn" id="3_v4og6"]
 [ext_resource type="PackedScene" uid="uid://71bo63rr8dlq" path="res://scenes/fire.tscn" id="5_wul2p"]
 [ext_resource type="PackedScene" uid="uid://cjv0csjdyhnm2" path="res://scenes/waterSource.tscn" id="8_7mnip"]
+[ext_resource type="AudioStream" uid="uid://cbhvn7yb56kbr" path="res://assets/music/calm before the storm.wav" id="9_45iqe"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_n1vxd"]
 texture = ExtResource("2_wcndx")
@@ -740,3 +741,7 @@ collision_layer = 3
 
 [node name="WaterSource2" parent="." instance=ExtResource("8_7mnip")]
 position = Vector2(82, -29)
+
+[node name="Music" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_45iqe")
+autoplay = true
