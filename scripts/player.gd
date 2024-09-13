@@ -61,7 +61,7 @@ func _playerMovement() -> void:
 		var directionx := Input.get_axis("moveLeft", "moveRight")
 		var directiony := Input.get_axis("moveUp", "moveDown")
 
-	#set up animation for either walking or idle
+		#set up animation for either walking or idle
 		if directionx or directiony:
 			animated_sprite.play("walking")
 		else:
@@ -76,8 +76,10 @@ func _playerMovement() -> void:
 			newVel.y = directiony * SPEED
 		if (directiony > 0 and isWithinHoseRadius(0,5)):
 			newVel.y = directiony * SPEED
-#player movement, checks if it can move in one direction
+
+		#player movement, checks if it can move in one direction
 		velocity = newVel.normalized()*SPEED
+
 		move_and_slide()
 
 func disableWater() -> void:
