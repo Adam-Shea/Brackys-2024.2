@@ -65,8 +65,18 @@ func _playerMovement() -> void:
 	else:
 		animated_sprite.play("idle")
 	
+	var newVel = Vector2(0,0)
+	if (directionx < 0 and isWithinHoseRadius(-5,0)):
+		newVel.x = directionx * SPEED
+	if (directionx > 0 and isWithinHoseRadius(5,0)):
+		newVel.x = directionx * SPEED
+	if (directiony < 0 and isWithinHoseRadius(0,-5)):
+		newVel.y = directiony * SPEED
+	if (directiony > 0 and isWithinHoseRadius(0,5)):
+		newVel.y = directiony * SPEED
+	
 	#player movement, checks if it can move in one direction
-	velocity = Vector2(directionx,directiony).normalized()*SPEED
+	velocity = newVel.normalized()*SPEED
 			
 	move_and_slide()
 
