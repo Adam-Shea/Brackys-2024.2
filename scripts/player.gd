@@ -58,29 +58,27 @@ func isWithinHoseRadius(x,y):
 func _playerMovement() -> void:
 	# Get the input direction and handle the movement/deceleration..
 	if canMove:
-    var directionx := Input.get_axis("moveLeft", "moveRight")
-    var directiony := Input.get_axis("moveUp", "moveDown")
+		var directionx := Input.get_axis("moveLeft", "moveRight")
+		var directiony := Input.get_axis("moveUp", "moveDown")
 
-    #set up animation for either walking or idle
-    if directionx or directiony:
-      animated_sprite.play("walking")
-    else:
-      animated_sprite.play("idle")
+	#set up animation for either walking or idle
+		if directionx or directiony:
+			animated_sprite.play("walking")
+		else:
+			animated_sprite.play("idle")
 
-    var newVel = Vector2(0,0)
-    if (directionx < 0 and isWithinHoseRadius(-5,0)):
-      newVel.x = directionx * SPEED
-    if (directionx > 0 and isWithinHoseRadius(5,0)):
-      newVel.x = directionx * SPEED
-    if (directiony < 0 and isWithinHoseRadius(0,-5)):
-      newVel.y = directiony * SPEED
-    if (directiony > 0 and isWithinHoseRadius(0,5)):
-      newVel.y = directiony * SPEED
-
-    #player movement, checks if it can move in one direction
-    velocity = newVel.normalized()*SPEED
-
-    move_and_slide()
+		var newVel = Vector2(0,0)
+		if (directionx < 0 and isWithinHoseRadius(-5,0)):
+			newVel.x = directionx * SPEED
+		if (directionx > 0 and isWithinHoseRadius(5,0)):
+			newVel.x = directionx * SPEED
+		if (directiony < 0 and isWithinHoseRadius(0,-5)):
+			newVel.y = directiony * SPEED
+		if (directiony > 0 and isWithinHoseRadius(0,5)):
+			newVel.y = directiony * SPEED
+#player movement, checks if it can move in one direction
+		velocity = newVel.normalized()*SPEED
+		move_and_slide()
 
 func disableWater() -> void:
 	shootingWater = false
