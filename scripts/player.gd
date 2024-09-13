@@ -5,12 +5,12 @@ const SPEED = 200.0
 @onready var player: CharacterBody2D = $"."
 var firstPos
 const hoseLimit = Vector2(100.0,100.0)
-var shootDir = Vector2(0,0)
 var lastDir = Vector2(0,0)
 var hoseCenter = Vector2(0.0,0.0)
 var connectedToSource = false
 var hasIframes := false 
 var canPlaceSource = false
+var shootingWater = false
 const hoseForgivenessRange = 10
 const hoseRadius = 100
 @export var health = 3
@@ -31,22 +31,10 @@ func _draw() -> void:
 		0,
 		1), float(4.0))
 
-	if(shootDir.x == 1):
+	if (shootingWater && connectedToSource): 
 		$GPUParticles2D.emitting = true
-		$GPUParticles2D.rotation_degrees = 0
-		$RayCast2D.rotation_degrees = 0
-	elif(shootDir.x == -1):
-		$GPUParticles2D.emitting = true
-		$GPUParticles2D.rotation_degrees = 180
-		$RayCast2D.rotation_degrees = 180
-	elif(shootDir.y == 1):
-		$GPUParticles2D.emitting = true
-		$GPUParticles2D.rotation_degrees = 90
-		$RayCast2D.rotation_degrees = 90
-	elif(shootDir.y == -1):
-		$GPUParticles2D.emitting = true
-		$GPUParticles2D.rotation_degrees = 270
-		$RayCast2D.rotation_degrees = 270
+		$GPUParticles2D.rotation_degrees = rad_to_deg(get_angle_to(get_global_mouse_position()))
+		$RayCast2D.rotation_degrees = rad_to_deg(get_angle_to(get_global_mouse_position()))
 	else:
 		$GPUParticles2D.emitting = false
 
@@ -70,56 +58,52 @@ func isWithinHoseRadius(x,y):
 func _playerMovement() -> void:
 	# Get the input direction and handle the movement/deceleration..
 	if canMove:
-		var directionx := Input.get_axis("moveLeft", "moveRight")
-		var directiony := Input.get_axis("moveUp", "moveDown")
-		
-		#set up animation for either walking or idle
-		if directionx or directiony:
-			animated_sprite.play("walking")
-		else:
-			animated_sprite.play("idle")
-		
-		#player movement, checks if it can move in one direction
-		if (directionx < 0 and isWithinHoseRadius(-5,0)):
-			if(!Input.is_action_pressed("shootWater")):
-				lastDir = Vector2(-1,0)
-			animated_sprite.flip_h = true
-			velocity.x = directionx * SPEED
-		elif (directionx > 0 and isWithinHoseRadius(5,0)):
-			if(!Input.is_action_pressed("shootWater")):
-				lastDir = Vector2(1,0)
-			animated_sprite.flip_h = false
-			velocity.x = directionx * SPEED
-		elif (directiony < 0 and isWithinHoseRadius(0,-5)):
-			if(!Input.is_action_pressed("shootWater")):
-				lastDir = Vector2(0,-1)
-			velocity.y = directiony * SPEED
-		elif (directiony > 0 and isWithinHoseRadius(0,5)):
-			if(!Input.is_action_pressed("shootWater")):
-				lastDir = Vector2(0,1)
-			velocity.y = directiony * SPEED
-		else:
-			velocity.x = move_toward(velocity.x, 0, SPEED)
-			velocity.y = move_toward(velocity.y, 0, SPEED)
-				
-		move_and_slide()
+    var directionx := Input.get_axis("moveLeft", "moveRight")
+    var directiony := Input.get_axis("moveUp", "moveDown")
+
+    #set up animation for either walking or idle
+    if directionx or directiony:
+      animated_sprite.play("walking")
+    else:
+      animated_sprite.play("idle")
+
+    var newVel = Vector2(0,0)
+    if (directionx < 0 and isWithinHoseRadius(-5,0)):
+      newVel.x = directionx * SPEED
+    if (directionx > 0 and isWithinHoseRadius(5,0)):
+      newVel.x = directionx * SPEED
+    if (directiony < 0 and isWithinHoseRadius(0,-5)):
+      newVel.y = directiony * SPEED
+    if (directiony > 0 and isWithinHoseRadius(0,5)):
+      newVel.y = directiony * SPEED
+
+    #player movement, checks if it can move in one direction
+    velocity = newVel.normalized()*SPEED
+
+    move_and_slide()
 
 func disableWater() -> void:
-	shootDir = Vector2(0,0)
+	shootingWater = false
 	$RayCast2D.enabled = false
 
 func _shootWater() -> void:
 	if(Input.is_action_just_pressed("shootWater") && connectedToSource):
-		shootDir = lastDir
+		shootingWater = true
 		$RayCast2D.enabled = true
 	if(Input.is_action_just_released("shootWater")):
 		disableWater()
 	
-	if ($RayCast2D.enabled && $RayCast2D.is_colliding()):
-		if ($RayCast2D.get_collider() && $RayCast2D.get_collider().name.left(4) == "Fire"):
-			$RayCast2D.get_collider().health -= 1
-			$RayCast2D.get_collider().scale.x *= 0.998
-			$RayCast2D.get_collider().scale.y *= 0.998
+	if ($RayCast2D.enabled):
+		$RayCast2D.clear_exceptions()
+		while $RayCast2D.is_colliding():
+			var obj = $RayCast2D.get_collider()
+			if (obj.name.left(4) == "Fire"):
+				obj.health -= 2
+				obj.scale.x *= 0.995
+				obj.scale.y *= 0.995
+			$RayCast2D.add_exception( obj )
+			$RayCast2D.force_raycast_update()
+		
 
 
 func _disconnectSource() -> void:
