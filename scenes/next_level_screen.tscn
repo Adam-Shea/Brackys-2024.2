@@ -1,0 +1,75 @@
+[gd_scene load_steps=7 format=3 uid="uid://ji1vs7fkv1p7"]
+
+[ext_resource type="FontFile" uid="uid://bgg4648xu46ae" path="res://img/FFFFORWA.TTF" id="1_lbgi0"]
+[ext_resource type="Script" path="res://scripts/button.gd" id="2_qn5dl"]
+[ext_resource type="Texture2D" uid="uid://dd0nmtob80f66" path="res://assets/art/calmbeforethestormfire.png" id="3_pg2kp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5jkjv"]
+atlas = ExtResource("3_pg2kp")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_43kmm"]
+atlas = ExtResource("3_pg2kp")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_naiup"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5jkjv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_43kmm")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="NextLevelScreen" type="Node2D"]
+script = ExtResource("2_qn5dl")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Label" type="Label" parent="Camera2D"]
+offset_left = -317.0
+offset_top = -265.0
+offset_right = -105.0
+offset_bottom = -242.0
+scale = Vector2(3, 3)
+theme_override_fonts/font = ExtResource("1_lbgi0")
+text = "Well done firefighter"
+
+[node name="Button" type="Button" parent="Camera2D"]
+offset_left = -117.0
+offset_top = 160.0
+offset_right = -1.0
+offset_bottom = 190.0
+scale = Vector2(2, 2)
+theme_override_fonts/font = ExtResource("1_lbgi0")
+text = "Next Level"
+
+[node name="Label2" type="Label" parent="Camera2D"]
+offset_left = -188.0
+offset_top = 2.0
+offset_bottom = 25.0
+scale = Vector2(2, 2)
+theme_override_fonts/font = ExtResource("1_lbgi0")
+text = "Fires extinguished
+"
+
+[node name="fire_count" type="Label" parent="Camera2D"]
+offset_left = -109.0
+offset_top = -56.0
+offset_right = -69.0
+offset_bottom = -33.0
+scale = Vector2(2, 2)
+theme_override_fonts/font = ExtResource("1_lbgi0")
+text = "0 x"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Camera2D"]
+position = Vector2(78, -60)
+scale = Vector2(5.9375, 5.5)
+sprite_frames = SubResource("SpriteFrames_naiup")
+
+[connection signal="pressed" from="Camera2D/Button" to="." method="_on_button_pressed"]

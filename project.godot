@@ -15,6 +15,12 @@ run/main_scene="res://scenes/game.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 
+[gui]
+
+theme/default_font_antialiasing=0
+theme/default_font_hinting=0
+theme/default_font_subpixel_positioning=0
+
 [input]
 
 moveRight={
@@ -55,3 +61,4 @@ interact={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+viewport/transparent_background=true

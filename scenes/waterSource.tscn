@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://cjv0csjdyhnm2"]
 
 [ext_resource type="Texture2D" uid="uid://b08e1bjtmbxk4" path="res://img/firePlaceholder.png" id="1_qg74k"]
-[ext_resource type="Script" path="res://scenes/water_source.gd" id="1_rnf8v"]
+[ext_resource type="Script" path="res://scripts/water_source.gd" id="1_rnf8v"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xyg2e"]
 

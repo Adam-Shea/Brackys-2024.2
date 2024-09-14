@@ -7,6 +7,7 @@ var firstPos
 const hoseLimit = Vector2(100.0,100.0)
 var lastDir = Vector2(0,0)
 var hoseCenter = Vector2(0.0,0.0)
+var nextWaterSource = Vector2(0,0)
 var connectedToSource = false
 var hasIframes := false 
 var canPlaceSource = false
@@ -97,7 +98,7 @@ func _shootWater() -> void:
 		$RayCast2D.clear_exceptions()
 		while $RayCast2D.is_colliding():
 			var obj = $RayCast2D.get_collider()
-			if (obj.name.left(4) == "Fire"):
+			if ("name" in obj && obj.name.left(4) == "Fire"):
 				obj.health -= 2
 				obj.scale.x *= 0.995
 				obj.scale.y *= 0.995
@@ -114,6 +115,7 @@ func _disconnectSource() -> void:
 			disableWater()
 	# Just so we can debug with multiple sources
 	elif(Input.is_action_just_released("interact") && !connectedToSource && canPlaceSource):
+		hoseCenter = nextWaterSource
 		connectedToSource = true
 			
 func _on_body_entered():
@@ -122,8 +124,8 @@ func _on_body_entered():
 #this handles pushback now
 func handleDamageTaken(damageAmount,vectorTo) -> void:
 	if (!hasIframes):
-		player.global_position.x -= vectorTo.x*1.5
-		player.global_position.y -= vectorTo.y*1.5
+		player.global_position.x -= vectorTo.x*0.5
+		player.global_position.y -= vectorTo.y*0.5
 		#hasIframes = true
 		#health -= damageAmount
 		#if(health<=0):
@@ -146,3 +148,7 @@ func _physics_process(delta: float) -> void:
 	queue_redraw()
 	#print(firstPos)
 	#print(player.global_position)
+
+
+func _on_timer_timeout() -> void:
+	get_parent().get_parent().reload()

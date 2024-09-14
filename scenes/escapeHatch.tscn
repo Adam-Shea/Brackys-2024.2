@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3 uid="uid://br8uuy0cssqah"]
+
+[ext_resource type="Script" path="res://scripts/escape_hatch.gd" id="1_mne6u"]
+[ext_resource type="Texture2D" uid="uid://clwj4w80ulqyb" path="res://img/tilesheet.png" id="2_cw61c"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bhxwr"]
+atlas = ExtResource("2_cw61c")
+region = Rect2(96, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wy2ky"]
+atlas = ExtResource("2_cw61c")
+region = Rect2(80, 32, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3j04l"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bhxwr")
+}],
+"loop": true,
+"name": &"closed",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wy2ky")
+}],
+"loop": true,
+"name": &"open",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t2t3o"]
+size = Vector2(16, 16)
+
+[node name="Escape hatch" type="Area2D"]
+script = ExtResource("1_mne6u")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_3j04l")
+animation = &"closed"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_t2t3o")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

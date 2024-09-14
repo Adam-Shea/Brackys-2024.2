@@ -1,8 +1,26 @@
-[gd_scene load_steps=12 format=3 uid="uid://c72epayfxecr0"]
+[gd_scene load_steps=17 format=3 uid="uid://c72epayfxecr0"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_kj3n1"]
 [ext_resource type="Texture2D" uid="uid://d4jrmbgr76iif" path="res://assets/art/firefighteridle.png" id="2_ph3b0"]
 [ext_resource type="Texture2D" uid="uid://e1xpuonr6brl" path="res://assets/art/firefighterwalking.png" id="3_oqyxa"]
+[ext_resource type="PackedScene" uid="uid://b3ftcrrhb6dlk" path="res://scenes/heart.tscn" id="4_kwkmu"]
+[ext_resource type="FontFile" uid="uid://bgg4648xu46ae" path="res://img/FFFFORWA.TTF" id="5_nr5b6"]
+[ext_resource type="Texture2D" uid="uid://dbp00iu8hwxx1" path="res://assets/art/cat.png" id="6_1iv10"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2h1if"]
+atlas = ExtResource("6_1iv10")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vxiv0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2h1if")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lexbx"]
 atlas = ExtResource("2_ph3b0")
@@ -67,10 +85,58 @@ collision_layer = 3
 collision_mask = 3
 script = ExtResource("1_kj3n1")
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 15
+scale = Vector2(3.405, 3.405)
+transform = Transform2D(3.405, 0, 0, 3.405, 0, 0)
+
+[node name="heart" parent="CanvasLayer" instance=ExtResource("4_kwkmu")]
+position = Vector2(11.7474, 9.10426)
+scale = Vector2(1.335, 1.335)
+
+[node name="heart2" parent="CanvasLayer" instance=ExtResource("4_kwkmu")]
+position = Vector2(29.3686, 9.10426)
+scale = Vector2(1.335, 1.335)
+
+[node name="heart3" parent="CanvasLayer" instance=ExtResource("4_kwkmu")]
+position = Vector2(46.9897, 9.39794)
+scale = Vector2(1.335, 1.335)
+
+[node name="GameOverLabel" type="Label" parent="CanvasLayer"]
+texture_filter = 1
+texture_repeat = 1
+offset_left = 22.9075
+offset_top = 90.4552
+offset_right = 248.907
+offset_bottom = 113.455
+scale = Vector2(1.335, 1.335)
+theme_override_fonts/font = ExtResource("5_nr5b6")
+text = "Nice Work, Firefighter"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Timer" type="Timer" parent="CanvasLayer"]
+wait_time = 3.0
+
+[node name="CatCounter" type="Label" parent="CanvasLayer"]
+offset_left = 276.946
+offset_top = 7.04846
+offset_right = 316.946
+offset_bottom = 30.0485
+scale = Vector2(0.845, 0.845)
+theme_override_fonts/font = ExtResource("5_nr5b6")
+text = "0/0"
+metadata/_edit_use_anchors_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer"]
+position = Vector2(320.999, 14.6843)
+scale = Vector2(1.335, 1.335)
+sprite_frames = SubResource("SpriteFrames_vxiv0")
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-1, -8)
 sprite_frames = SubResource("SpriteFrames_lmdbm")
-animation = &"idle"
+animation = &"walking"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -89,3 +155,11 @@ enabled = false
 target_position = Vector2(65, 0)
 collision_mask = 2
 collide_with_areas = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(7, 7)
+position_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+
+[connection signal="timeout" from="CanvasLayer/Timer" to="." method="_on_timer_timeout"]

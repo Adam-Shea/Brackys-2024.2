@@ -38,4 +38,5 @@ func _on_body_entered(body: Node2D) -> void:
 
 func _physics_process(delta: float) -> void:
 	if (health <=0):
+		game_manager.firesDestroyed += 1
 		queue_free()
