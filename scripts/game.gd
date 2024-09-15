@@ -1,5 +1,5 @@
 extends Node2D
-var currentLevel = 1;
+var currentLevel = 0;
 var nextLevelScreen = load("res://scenes/next_level_screen.tscn")
 
 

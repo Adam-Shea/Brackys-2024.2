@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 #current speed of player
-const SPEED = 200.0
+const SPEED = 130.0
 @onready var player: CharacterBody2D = $"."
 var firstPos
 const hoseLimit = Vector2(100.0,100.0)

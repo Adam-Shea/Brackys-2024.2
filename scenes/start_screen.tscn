@@ -1,0 +1,38 @@
+[gd_scene load_steps=4 format=3 uid="uid://bnyecq4c6ow33"]
+
+[ext_resource type="Script" path="res://scripts/start_screen.gd" id="1_ynp5w"]
+[ext_resource type="FontFile" uid="uid://bgg4648xu46ae" path="res://img/FFFFORWA.TTF" id="2_wbg3a"]
+[ext_resource type="Texture2D" uid="uid://pgstv7omkj6" path="res://assets/art/firestorm_logo.png" id="3_2swa8"]
+
+[node name="Start screen" type="Node2D"]
+script = ExtResource("1_ynp5w")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Button" type="Button" parent="Camera2D"]
+offset_left = -117.0
+offset_top = 160.0
+offset_right = -1.0
+offset_bottom = 190.0
+scale = Vector2(2, 2)
+theme_override_fonts/font = ExtResource("2_wbg3a")
+text = "Start game"
+
+[node name="Label2" type="Label" parent="Camera2D"]
+offset_left = -278.0
+offset_top = -44.0
+offset_right = 2.0
+offset_bottom = 3.0
+scale = Vector2(2, 2)
+theme_override_fonts/font = ExtResource("2_wbg3a")
+text = "Developed in 7 days
+Brackeys Game Jam 2024.2"
+horizontal_alignment = 1
+
+[node name="FirestormLogo" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -189)
+scale = Vector2(4.14, 4.14)
+texture = ExtResource("3_2swa8")
+
+[connection signal="pressed" from="Camera2D/Button" to="." method="_on_button_pressed"]

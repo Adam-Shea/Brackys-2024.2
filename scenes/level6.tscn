@@ -1,0 +1,45 @@
+[gd_scene load_steps=4 format=3 uid="uid://g2b1w0btp18k"]
+
+[ext_resource type="Script" path="res://scripts/level_6.gd" id="1_q0s0m"]
+[ext_resource type="FontFile" uid="uid://bgg4648xu46ae" path="res://img/FFFFORWA.TTF" id="2_dx8x2"]
+[ext_resource type="Texture2D" uid="uid://pgstv7omkj6" path="res://assets/art/firestorm_logo.png" id="3_3h1gh"]
+
+[node name="Game finished screen" type="Node2D"]
+script = ExtResource("1_q0s0m")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Label" type="Label" parent="Camera2D"]
+offset_left = -317.0
+offset_top = -265.0
+offset_right = -105.0
+offset_bottom = -242.0
+scale = Vector2(3, 3)
+theme_override_fonts/font = ExtResource("2_dx8x2")
+text = "Well done firefighter!"
+
+[node name="Label2" type="Label" parent="Camera2D"]
+offset_left = -188.0
+offset_top = -129.0
+offset_right = 2.0
+offset_bottom = -106.0
+scale = Vector2(2, 2)
+theme_override_fonts/font = ExtResource("2_dx8x2")
+text = "Thanks for playing"
+
+[node name="Label2" type="Label" parent="Camera2D/Label2"]
+layout_mode = 0
+offset_left = -143.5
+offset_top = 177.5
+offset_right = 92.5
+offset_bottom = 200.5
+scale = Vector2(2, 2)
+theme_override_fonts/font = ExtResource("2_dx8x2")
+text = "Built across timezones"
+horizontal_alignment = 1
+
+[node name="FirestormLogo" type="Sprite2D" parent="Camera2D/Label2"]
+texture_filter = 1
+position = Vector2(94.5, 107.5)
+scale = Vector2(1.65, 1.65)
+texture = ExtResource("3_3h1gh")
